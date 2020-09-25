@@ -1,6 +1,6 @@
 import requests
 from sys import argv
-from json import dumps, loads
+from json import dumps
 from requests.exceptions import HTTPError
 
 data = {
@@ -25,7 +25,6 @@ def sendRequest():
     except Exception as err:
         print(f'Other error occurred: {err}')  # Python 3.6
     else:
-        content = response.content
         print(response.json())
         print('Success!')
 
