@@ -21,14 +21,17 @@ def sendRequest(arg):
 
 
 if __name__ == "__main__":
-    data = {
-        "api_name": "daily",
-        "token": argv[1],
-        "params": {
-            "ts_code": "000001.SZ",
-            "start_date": 20181010,
-            "end_date": 20181020
-        },
-        "fields": "ts_code, trade_date, open"
-    }
-    print(sendRequest(data))
+    try:
+        data = {
+            "api_name": "daily",
+            "token": argv[1],
+            "params": {
+                "ts_code": "000001.SZ",
+                "start_date": 20181010,
+                "end_date": 20181020
+            },
+            "fields": "ts_code, trade_date, open"
+        }
+        print(sendRequest(data))
+    except TushareError:
+        print("something went wrong with the tushare part")
