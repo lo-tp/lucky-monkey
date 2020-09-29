@@ -1,5 +1,4 @@
 import requests
-from sys import argv
 from json import dumps
 import argparse
 
