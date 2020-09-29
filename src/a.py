@@ -1,6 +1,7 @@
 import requests
 from sys import argv
 from json import dumps
+import argparse
 
 
 class TushareError(Exception):
@@ -21,10 +22,17 @@ def sendRequest(arg):
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='This is the network module')
+    parser.add_argument(
+        '--token',
+        help='use this argument to input the tushare token',
+        required=True
+    )
+    args = parser.parse_args()
     try:
         data = {
             "api_name": "daily",
-            "token": argv[1],
+            "token": args.token,
             "params": {
                 "ts_code": "000001.SZ",
                 "start_date": 20181010,
