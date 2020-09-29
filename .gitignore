@@ -2,3 +2,5 @@ env/
 .vim/
 **/py
 **/__pycache__
+db
+ 
