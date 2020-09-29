@@ -25,7 +25,7 @@ if __name__ == "__main__":
         "api_name": "daily",
         "token": argv[1],
         "params": {
-            "ts_code": "1A0001",
+            "ts_code": "000001.SZ",
             "start_date": 20181010,
             "end_date": 20181020
         },
