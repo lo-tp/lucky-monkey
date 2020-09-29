@@ -1,22 +1,23 @@
 import requests
 from sys import argv
 from json import dumps
-from requests.exceptions import HTTPError
+
+
+class TushareError(Exception):
+    def __init__(self, code, message):
+        self.code = code
+        self.message = message
 
 
 def sendRequest(arg):
-    try:
-        response = requests.post(
-            "http://api.waditu.com",
-            data=dumps(arg))
-        # If the response was successful, no Exception will be raised
-        response.raise_for_status()
-    except HTTPError as http_err:
-        print(f'HTTP error occurred: {http_err}')  # Python 3.6
-    except Exception as err:
-        print(f'Other error occurred: {err}')  # Python 3.6
-    else:
-        return response.json()
+    response = requests.post(
+        "http://api.waditu.com",
+        data=dumps(arg))
+    response.raise_for_status()
+    data = response.json()
+    if data['code']:
+        raise TushareError(data['code'], data['msg'])
+    return response.json()
 
 
 if __name__ == "__main__":
