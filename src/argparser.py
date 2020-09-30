@@ -10,6 +10,7 @@ arg_parser.add_argument(
 
 arg_parser.add_argument(
     '--token',
+    '-t',
     help='use this argument to input the tushare token',
     required=True
 )
