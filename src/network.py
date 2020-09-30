@@ -1,6 +1,7 @@
 import requests
 from json import dumps
 from argparser import arg_parser
+from logging import debug, error, info
 
 
 class TushareError(Exception):
@@ -8,16 +9,22 @@ class TushareError(Exception):
         self.code = code
         self.message = message
 
+    def __str__(self):
+        return '{}:{}'.format(self.code, self.message)
+
 
 def sendRequest(arg):
+    debug('send request with following args: {}'.format(arg))
     response = requests.post(
         "http://api.waditu.com",
         data=dumps(arg))
     response.raise_for_status()
     data = response.json()
+    debug('response: {}'.format(data))
+
     if data['code']:
         raise TushareError(data['code'], data['msg'])
-    return response.json()
+    return data
 
 
 def main():
@@ -33,6 +40,7 @@ def main():
             },
             "fields": "ts_code, trade_date, open"
         }
-        print(sendRequest(data))
-    except TushareError:
-        print("something went wrong with the tushare part")
+        info(sendRequest(data))
+    except TushareError as tushareError:
+        error("something went wrong with the tushare part")
+        debug("Tushare Error: {}".format(tushareError))

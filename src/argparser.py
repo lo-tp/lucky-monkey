@@ -11,6 +11,15 @@ arg_parser.add_argument(
 arg_parser.add_argument(
     '--token',
     '-t',
-    help='use this argument to input the tushare token',
+    help='use this argument to input the tushare token,',
     required=True
+)
+
+arg_parser.add_argument(
+    '--verbosity',
+    '-v',
+    help='set the logging level, the higher the level, the more info you get',
+    type=int,
+    choices=range(0, 5),
+    default=3
 )
