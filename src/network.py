@@ -20,7 +20,7 @@ def sendRequest(arg):
     return response.json()
 
 
-if __name__ == "__main__":
+def main():
     args = arg_parser.parse_args()
     try:
         data = {
