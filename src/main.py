@@ -1,10 +1,11 @@
 from argparser import arg_parser
 from network import main as network_main
+from db import main as db_main
 import logging
 
 
 def main():
-    args = arg_parser.parse_args()
+    args, _ = arg_parser.parse_known_args()
     verbosities = [logging.CRITICAL, logging.ERROR,
                    logging.WARNING, logging.INFO, logging.DEBUG]
     logging.basicConfig(
@@ -16,6 +17,8 @@ def main():
     logging.debug('token is {}'.format(args.token))
     if args.command == 'network':
         network_main()
+    elif args.command == 'db':
+        db_main()
 
 
 if __name__ == '__main__':

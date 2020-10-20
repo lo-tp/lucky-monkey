@@ -1,7 +1,7 @@
 import argparse
 
 arg_parser = argparse.ArgumentParser(
-    description='This is a script used to get stock datas')
+    add_help=False,    description='This is a script used to get stock datas')
 
 arg_parser.add_argument(
     "command",
