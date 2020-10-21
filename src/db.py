@@ -3,8 +3,9 @@ import argparse
 from argparser import arg_parser as shared_arg_parser
 
 
-def initilize(user, host, port, password):
+def initilize(database, user, host, port, password):
     connection = psycopg2.connect(
+        database=database,
         user=user,
         host=host,
         port=port,
@@ -42,6 +43,12 @@ def main():
         help='use this argument to input the postgres db password,',
         required=True
     )
+
+    arg_parser.add_argument(
+        '--database',
+        help='use this argument to input the postgres db name,',
+        required=True
+    )
     args = arg_parser.parse_args()
-    initilize(user=args.user, host=args.host,
+    initilize(database=args.database, user=args.user, host=args.host,
               port=args.port, password=args.password)
