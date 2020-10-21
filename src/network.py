@@ -1,6 +1,7 @@
 import requests
+import argparse
 from json import dumps
-from argparser import arg_parser
+from argparser import arg_parser as shared_arg_parser
 from logging import debug, error, info
 
 
@@ -28,7 +29,18 @@ def sendRequest(arg):
 
 
 def main():
+    arg_parser = argparse.ArgumentParser(parents=[shared_arg_parser])
+    arg_parser.add_argument(
+        '--token',
+        '-t',
+        help='use this argument to input the tushare token,',
+        required=True
+    )
+
     args = arg_parser.parse_args()
+
+    debug('token is {}'.format(args.token))
+
     try:
         data = {
             "api_name": "daily",

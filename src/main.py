@@ -14,7 +14,6 @@ def main():
         level=verbosities[args.verbosity]
     )
 
-    logging.debug('token is {}'.format(args.token))
     if args.command == 'network':
         network_main()
     elif args.command == 'db':
