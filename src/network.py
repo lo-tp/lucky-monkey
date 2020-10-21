@@ -28,31 +28,60 @@ def sendRequest(arg):
     return data
 
 
+def get_company(parent_argparser):
+    arg_parser = argparse.ArgumentParser(parents=[parent_argparser])
+    arg_parser.add_argument(
+        "--code",
+        "-c",
+        required=True,
+        help="what is the code of the company you are interested in",
+    )
+    arg_parser.add_argument(
+        "--fields",
+        "-f",
+        required=True,
+        help="what is the fields you are interested in",
+    )
+    args = arg_parser.parse_args()
+    debug("code: {}".format(args.code))
+    debug("fields: {}".format(args.fields))
+
+    res = None
+    try:
+        data = {
+            "api_name": "stock_company",
+            "token": args.token,
+            "params": {
+                "ts_code": args.code
+            },
+            "fields": args.fields
+        }
+        res = sendRequest(data)
+    except TushareError as tushareError:
+        error("something went wrong with the tushare part")
+        debug("Tushare Error: {}".format(tushareError))
+    return res
+
+
 def main():
-    arg_parser = argparse.ArgumentParser(parents=[shared_arg_parser])
+    arg_parser = argparse.ArgumentParser(
+        add_help=False,
+        parents=[shared_arg_parser])
     arg_parser.add_argument(
         '--token',
         '-t',
         help='use this argument to input the tushare token,',
         required=True
     )
+    arg_parser.add_argument(
+        "sub_command",
+        help="what sub command do you want to use",
+    )
 
-    args = arg_parser.parse_args()
+    args, _ = arg_parser.parse_known_args()
 
+    debug(args.sub_command)
     debug('token is {}'.format(args.token))
 
-    try:
-        data = {
-            "api_name": "daily",
-            "token": args.token,
-            "params": {
-                "ts_code": "000001.SZ",
-                "start_date": 20181010,
-                "end_date": 20181020
-            },
-            "fields": "ts_code, trade_date, open"
-        }
-        info(sendRequest(data))
-    except TushareError as tushareError:
-        error("something went wrong with the tushare part")
-        debug("Tushare Error: {}".format(tushareError))
+    if args.sub_command == "check_company":
+        info(get_company(arg_parser))

@@ -5,7 +5,7 @@ arg_parser = argparse.ArgumentParser(
 
 arg_parser.add_argument(
     "command",
-    help="what command do you want to do",
+    help="what command do you want to use",
 )
 
 arg_parser.add_argument(
